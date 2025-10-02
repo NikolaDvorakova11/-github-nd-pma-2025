@@ -29,5 +29,35 @@ class MainActivity : AppCompatActivity() {
         val btnSend = findViewById<Button>(R.id.btnSend)
         val btnDelete = findViewById<Button>(R.id.btnDelete)
 
+        // Nastavení obsluhy pro tlačítko odeslat - Obsluha tlačítka odeslat
+
+        btnSend.setOnClickListener {
+            val name = etName.text.toString()
+            val surname = etSurname.text.toString()
+            val place = etPlace.text.toString()
+            val age = etAge.text.toString()
+
+        // Zobrazení textu v TextView
+            val formatedText = "Jmenuji se $name $surname. Je mi $age let a moje bydliště je $place."
+
+            tvInformation.text = formatedText
+        }
+
+
+        // Nastavení obsluhy pro tlačítko vymazat
+        btnDelete.setOnClickListener {
+            etName.text.clear()
+            etSurname.text.clear()
+            etPlace.text.clear()
+            etAge.text.clear()
+
+        //Vymazání textu v TextView
+            tvInformation.text = ""
+        }
+
+
+
+
+
     }
 }
