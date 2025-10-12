@@ -21,6 +21,22 @@ class ThirdActivity : AppCompatActivity() {
         binding = ActivityThirdBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Přijetí dat
+        val nickname = intent.getStringExtra("NICK_NAME")
+        val startNumber = intent.getStringExtra("START_NUMBER")
+        val age = intent.getStringExtra("AGE")
+        val position = intent.getStringExtra("POSITION")
+        val runTime = intent.getStringExtra("RUN_TIME")
+
+        //Zobrazení dat v textovém poli
+        binding.tvThirdInfo.text = "Údaje běžce: \nPřezdívka: $nickname \nStartovní číslo: $startNumber \nVěk: $age let \nPořadí v závodě: $position \nČas běhu: $runTime"
+
+
+        //Návrat zpět
+        binding.btnThirdBack.setOnClickListener {
+            finish()
+        }
+
 
 
 

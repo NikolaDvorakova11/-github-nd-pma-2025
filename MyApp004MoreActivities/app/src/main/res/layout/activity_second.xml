@@ -15,7 +15,26 @@
         android:id="@+id/twInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Data z první aktivity:"/>
+        android:text="Data z první aktivity:"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"/>
+
+    <EditText
+        android:id="@+id/etPosition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Zadejte pořadí v závodě (např. 5.)"
+        android:inputType="number"
+        android:layout_marginBottom="10dp" />
+
+    <!-- Nové pole: čas běhu -->
+    <EditText
+        android:id="@+id/etRunTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Zadejte čas běhu v min (např. 45)"
+        android:inputType="number"
+        android:layout_marginBottom="20dp" />
 
     <Button
         android:id="@+id/btnThirdAct"
