@@ -22,6 +22,8 @@ class SecondActivity : AppCompatActivity() {
        //Inicializace View Bindingu
         binding = ActivitySecondBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.topAppBar)
+        supportActionBar?.title = "Druhá aktivita"
 
         //Načtení dat z intentu
         val nickname = intent.getStringExtra("NICK_NAME")

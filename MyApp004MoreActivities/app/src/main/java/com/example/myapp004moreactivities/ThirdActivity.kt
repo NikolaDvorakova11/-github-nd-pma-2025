@@ -20,6 +20,8 @@ class ThirdActivity : AppCompatActivity() {
         // Inicializace View Bindingu
         binding = ActivityThirdBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.topAppBar)
+        supportActionBar?.title = "Souhrn údajů"
 
         //Přijetí dat
         val nickname = intent.getStringExtra("NICK_NAME")

@@ -10,6 +10,15 @@
     android:padding="20dp"
     android:layout_marginTop="20dp">
 
+    <!--  Top Bar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:title="Druhá aktivita"
+        android:titleTextColor="@color/colorOnPrimary"
+        android:elevation="4dp" />
 
     <TextView
         android:id="@+id/twInfo"

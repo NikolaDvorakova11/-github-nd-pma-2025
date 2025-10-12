@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
        //Inicializace View Bindingu
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.topAppBar)
+        supportActionBar?.title = "Hlavní aktivita"
 
        //Odeslání dat do SecondActivity
         binding.btnSecondAct.setOnClickListener {
