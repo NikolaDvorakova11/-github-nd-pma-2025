@@ -18,9 +18,15 @@ class SecondActivity : AppCompatActivity() {
 
         //Načtení dat z intentu
         val nickname = intent.getStringExtra("NICK_NAME")
-        twInfo.text = "Data z první aktivity. Přezdívka: $nickname"
+        val startNumber = intent.getStringExtra("START_NUMBER")
+        val age = intent.getStringExtra("AGE")
+
+        //Zobrazení přijatých dat
+        twInfo.text = "Data z první aktivity. \nPřezdívka: $nickname \nStartovní čílo: $startNumber \nVěk: $age"
 
         val btnClose = findViewById<Button>(R.id.btnClose)
+
+        //Tlačítko pro návrat
         btnClose.setOnClickListener {
             finish()
         }

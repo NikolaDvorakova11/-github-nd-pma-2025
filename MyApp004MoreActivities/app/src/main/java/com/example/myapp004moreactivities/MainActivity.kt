@@ -18,12 +18,19 @@ class MainActivity : AppCompatActivity() {
 
         val btnSecondAct = findViewById<Button>( R.id.btnSecondAct)
         val etNickname = findViewById<EditText>(R.id.etNickname)
-
+        val etStartNumber = findViewById<EditText>(R.id.etStartNumber)
+        val etAge = findViewById<EditText>(R.id.etAge)
 
         btnSecondAct.setOnClickListener {
             val nickname = etNickname.text.toString()
+            val startNumber = etStartNumber.text.toString()
+            val age  = etAge.text.toString()
+
             val intent = Intent(this, SecondActivity::class.java)
             intent.putExtra("NICK_NAME",nickname)
+            intent.putExtra("START_NUMBER", startNumber)
+            intent.putExtra("AGE", age)
+
             startActivity(intent)
             
         }

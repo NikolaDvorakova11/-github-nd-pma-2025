@@ -28,6 +28,22 @@
         android:layout_marginTop="20dp"
         />
 
+    <EditText
+        android:id="@+id/etStartNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Zadejte startovní číslo"
+        android:inputType="number"
+        android:layout_marginTop="15dp"/>
+
+    <EditText
+        android:id="@+id/etAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Zadejte věk"
+        android:inputType="number"
+        android:layout_marginTop="15dp"/>
+
     <Button
         android:id="@+id/btnSecondAct"
         android:layout_width="wrap_content"
