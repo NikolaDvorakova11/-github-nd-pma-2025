@@ -17,6 +17,17 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <!-- ID vloženo pro úkol 15.2 -->
+        <TextView
+            android:id="@+id/tvNoteId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ID: 0"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#888888"
+            android:layout_marginBottom="4dp"/>
+
         <TextView
             android:id="@+id/tvNoteTitle"
             android:layout_width="match_parent"

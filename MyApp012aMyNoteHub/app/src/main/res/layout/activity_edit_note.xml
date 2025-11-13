@@ -12,6 +12,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Zobrazení ID poznámky pro úkol 15.2 -->
+        <TextView
+            android:id="@+id/tvNoteId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
         <EditText
             android:id="@+id/etEditTitle"
             android:layout_width="match_parent"

@@ -44,7 +44,9 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             },
             onDeleteClick = { note ->
-                deleteNote(note)
+                //Zde jsem změnila pro úkol 15.1
+                //deleteNote(note)
+                showDeleteConfirmationDialog(note)
             }
         )
 
@@ -65,6 +67,25 @@ class MainActivity : AppCompatActivity() {
         // a ukončí se automaticky, když se aktivita zničí
         lifecycleScope.launch(Dispatchers.IO) {
             noteDao.delete(note)
+        }
+    }
+    //Toto jsem tam vložila pro úkol 15.1
+    //Metoda pro zobrazení potvrzení po smazání poznámky
+    private fun showDeleteConfirmationDialog(note: Note) {
+        runOnUiThread {
+            androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Potvrzení")
+                .setMessage("Opravdu chcete smazat tuto poznámku?")
+                .setPositiveButton("ANO") { dialog, _ ->
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        noteDao.delete(note)
+                    }
+                    dialog.dismiss()
+                }
+                .setNegativeButton("NE") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
         }
     }
 }

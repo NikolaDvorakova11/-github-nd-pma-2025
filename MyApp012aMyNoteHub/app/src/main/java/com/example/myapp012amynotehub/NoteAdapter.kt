@@ -34,6 +34,9 @@ class NoteAdapter(
         holder.binding.tvNoteTitle.text = currentNote.title
         holder.binding.tvNoteContent.text = currentNote.content
 
+        // Úkol 15.2 - Zobrazení ID poznámky
+        holder.binding.tvNoteId.text = "ID: ${currentNote.id}"
+
         // DOPLNĚNO: Kliknutí na EDIT ikonu
         holder.binding.ivEdit.setOnClickListener {
             onEditClick(currentNote)
