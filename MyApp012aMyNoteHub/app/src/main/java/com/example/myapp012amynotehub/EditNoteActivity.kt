@@ -1,6 +1,8 @@
 package com.example.myapp012amynotehub
 
+import android.R
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -19,6 +21,11 @@ class EditNoteActivity : AppCompatActivity() {
     private lateinit var noteDao: NoteDao
     private var noteId: Int = -1
 
+
+    // Úkol 20.11.
+    private val categories = listOf("Ostatní", "Škola", "Práce", "Osobní")
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,6 +41,15 @@ class EditNoteActivity : AppCompatActivity() {
         //Zde jsem vložila pro úkol 15.2 - Zobraz ID poznámky v TextView
         binding.tvNoteId.text = "ID poznámky: $noteId"
 
+        // Úkol 20.11. - Inicializace Spinneru
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            categories
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerCategory.adapter = adapter
+
         // Načteme poznámku z DB
         lifecycleScope.launch {
             noteDao.getAllNotes().collect { notes ->
@@ -41,6 +57,12 @@ class EditNoteActivity : AppCompatActivity() {
                 if (note != null) {
                     binding.etEditTitle.setText(note.title)
                     binding.etEditContent.setText(note.content)
+
+                    // Úkol 20.11– načtení kategorie do spinneru
+                    val index = categories.indexOf(note.category)
+                    if (index >= 0) {
+                        binding.spinnerCategory.setSelection(index)
+                    }
                 }
             }
         }
@@ -49,11 +71,13 @@ class EditNoteActivity : AppCompatActivity() {
         binding.btnSaveChanges.setOnClickListener {
             val updatedTitle = binding.etEditTitle.text.toString()
             val updatedContent = binding.etEditContent.text.toString()
+            val updatedCategory = binding.spinnerCategory.selectedItem.toString()
 
             val updatedNote = Note(
                 id = noteId,
                 title = updatedTitle,
-                content = updatedContent
+                content = updatedContent,
+                category = updatedCategory
             )
 
             lifecycleScope.launch(Dispatchers.IO) {

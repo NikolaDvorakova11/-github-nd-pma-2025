@@ -39,6 +39,14 @@
             android:inputType="textMultiLine"
             />
 
+        <!-- Úkol 20.11.- Kategorie (zobrazení + editace) -->
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="8dp" />
+
         <Button
             android:id="@+id/btnSaveChanges"
             android:layout_width="match_parent"
