@@ -15,6 +15,7 @@ import com.example.myapp012amynotehub.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // value pro vyhledávání
+        val searchQuery = MutableStateFlow("")
+
 
         binding.fabAddNote.setOnClickListener {
             val intent = Intent(this, AddNoteActivity::class.java)
@@ -58,6 +63,35 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             noteDao.getAllNotes().collectLatest { notes ->
                 adapter.submitList(notes)
+            }
+        }
+
+        // --- Vyhledávání v poznámkách ---
+        // Listener SearchView: změna textu → změní hodnotu Flow
+        binding.searchViewNotes.setOnQueryTextListener(object :
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchQuery.value = newText ?: ""
+                return true
+            }
+        })
+
+        // Jeden společný collector, který reaguje na změnu textu
+        lifecycleScope.launch {
+            searchQuery.collectLatest { text ->
+                if (text.isEmpty()) {
+                    // Zobrazit všechny poznámky
+                    noteDao.getAllNotes().collectLatest { notes ->
+                        adapter.submitList(notes)
+                    }
+                } else {
+                    // Zobrazit filtrované poznámky
+                    noteDao.searchNotes(text).collectLatest { notes ->
+                        adapter.submitList(notes)
+                    }
+                }
             }
         }
     }
