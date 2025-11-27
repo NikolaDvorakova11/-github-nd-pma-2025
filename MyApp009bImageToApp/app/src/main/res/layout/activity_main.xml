@@ -1,162 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA"
-    android:padding="16dp"
-    tools:context=".MainActivity">
+    android:background="#F4F4F4"
+    android:fillViewport="true">
 
-    <!-- Titulek -->
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Editor Obrázků"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#212121"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/cardImage"
-        app:layout_constraintVertical_bias="0"
-        android:layout_marginBottom="8dp" />
+        android:padding="20dp"
+        tools:context=".MainActivity">
 
-    <!-- Obrázek v kartě -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardImage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:cardElevation="6dp"
-        app:cardCornerRadius="12dp"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintBottom_toTopOf="@+id/controlsContainer">
-
-        <ImageView
-            android:id="@+id/ivImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:contentDescription="Obrázek k úpravě"
-            android:background="#E0E0E0"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
-    </androidx.cardview.widget.CardView>
-
-    <!-- Ovládací panel -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/controlsContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="12dp"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/cardImage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- HLAVNÍ NADPIS + TLAČÍTKO GALERIE -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:text="📷 Editor Obrázků"
+            android:textColor="#1A1A1A"
+            android:textSize="26sp"
+            android:fontFamily="sans-serif-medium"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnGallery"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
 
-            <Button
-                android:id="@+id/btnTakeImage"
+        <Button
+            android:id="@+id/btnGallery"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="🖼️ Galerie"
+            android:textSize="14sp"
+            android:paddingHorizontal="14dp"
+            android:backgroundTint="#FF7043"
+            android:textColor="@android:color/white"
+            app:layout_constraintTop_toTopOf="@id/tvTitle"
+            app:layout_constraintBottom_toBottomOf="@id/tvTitle"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- NÁHLEDOVÁ KARTA -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardImage"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="20dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="14dp"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/ivImage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="📁 Vybrat obrázek"
-                android:backgroundTint="#3F51B5"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="12dp"
-                android:padding="10dp"
-                android:fontFamily="sans-serif-medium" />
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:background="#E0E0E0"
+                android:contentDescription="Obrázek k úpravě"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        </androidx.cardview.widget.CardView>
 
-            <!-- Jas -->
-            <TextView
-                android:id="@+id/tvBrightnessLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Jas:"
-                android:textColor="#212121"
-                android:layout_marginTop="8dp" />
+        <!-- OVLÁDACÍ PANEL -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/controlsContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="3dp"
+            app:layout_constraintTop_toBottomOf="@id/cardImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <SeekBar
-                android:id="@+id/seekBarBrightness"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="200"
-                android:progress="100" />
-
-            <TextView
-                android:id="@+id/tvBrightnessValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0%"
-                android:textColor="#757575"
-                android:layout_marginBottom="8dp" />
-
-            <!-- Kontrast -->
-            <TextView
-                android:id="@+id/tvContrastLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kontrast:"
-                android:textColor="#212121"
-                android:layout_marginTop="8dp" />
-
-            <SeekBar
-                android:id="@+id/seekBarContrast"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="100"
-                android:progress="50" />
-
-            <TextView
-                android:id="@+id/tvContrastValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1.00x"
-                android:textColor="#757575"
-                android:layout_marginBottom="12dp" />
-
-            <!-- Tlačítka -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="8dp">
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:dividerPadding="8dp"
+                android:showDividers="none">
 
+                <!-- Vybrat obrázek -->
                 <Button
-                    android:id="@+id/btnApply"
-                    android:layout_width="0dp"
+                    android:id="@+id/btnTakeImage"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="✨ Použít úpravy"
-                    android:backgroundTint="#009688"
+                    android:text="📁 Vybrat obrázek"
                     android:textColor="@android:color/white"
-                    android:layout_marginEnd="6dp" />
+                    android:textSize="16sp"
+                    android:padding="12dp"
+                    android:backgroundTint="#3F51B5"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="18dp"/>
 
-                <Button
-                    android:id="@+id/btnGrayscale"
-                    android:layout_width="0dp"
+                <!-- SLIDERY -->
+                <!-- JAS -->
+                <TextView
+                    android:id="@+id/tvBrightnessLabel"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="⚫ Černobílý"
-                    android:backgroundTint="#607D8B"
+                    android:text="☀️ Jas"
+                    android:textSize="15sp"
+                    android:textColor="#333"
+                    android:layout_marginBottom="4dp"
+                    android:fontFamily="sans-serif-medium"/>
+
+                <SeekBar
+                    android:id="@+id/seekBarBrightness"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="200"
+                    android:progress="100"/>
+
+                <TextView
+                    android:id="@+id/tvBrightnessValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jas: 0%"
+                    android:textColor="#777"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- KONTRAST -->
+                <TextView
+                    android:id="@+id/tvContrastLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="◐ Kontrast"
+                    android:textSize="15sp"
+                    android:textColor="#333"
+                    android:fontFamily="sans-serif-medium"/>
+
+                <SeekBar
+                    android:id="@+id/seekBarContrast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100"
+                    android:progress="50"/>
+
+                <TextView
+                    android:id="@+id/tvContrastValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kontrast: 1.00x"
+                    android:textColor="#777"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- SYTOST -->
+                <TextView
+                    android:id="@+id/tvSaturationLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎨 Sytost barev"
+                    android:textSize="15sp"
+                    android:textColor="#333"
+                    android:fontFamily="sans-serif-medium"/>
+
+                <SeekBar
+                    android:id="@+id/seekBarSaturation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="200"
+                    android:progress="100"/>
+
+                <TextView
+                    android:id="@+id/tvSaturationValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sytost: 100%"
+                    android:textColor="#777"
+                    android:layout_marginBottom="20dp"/>
+
+                <!-- TLAČÍTKA DOLE -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="12dp">
+
+                    <Button
+                        android:id="@+id/btnGrayscale"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:text="⚫ Černobílý"
+                        android:backgroundTint="#546E7A"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="6dp"/>
+
+                    <Button
+                        android:id="@+id/btnReset"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:text="↺ Reset"
+                        android:backgroundTint="#FFA726"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:layout_marginStart="6dp"/>
+                </LinearLayout>
+
+                <!-- Uložit -->
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="💾 ULOŽIT FOTOGRAFII"
                     android:textColor="@android:color/white"
-                    android:layout_marginStart="6dp" />
+                    android:backgroundTint="#43A047"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:fontFamily="sans-serif-medium"/>
             </LinearLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

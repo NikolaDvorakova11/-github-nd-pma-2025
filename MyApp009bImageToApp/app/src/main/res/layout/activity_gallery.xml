@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#F4F4F4"
+    tools:context=".GalleryActivity">
+
+    <!-- Zpět -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="← Zpět"
+        android:textSize="14sp"
+        android:paddingHorizontal="14dp"
+        android:backgroundTint="#546E7A"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Počet obrázků -->
+    <TextView
+        android:id="@+id/tvImageCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Celkem obrázků: 0"
+        android:textSize="15sp"
+        android:textColor="#333"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintTop_toTopOf="@id/btnBack"
+        app:layout_constraintBottom_toBottomOf="@id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Prázdná galerie -->
+    <TextView
+        android:id="@+id/tvEmptyMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🖼️ Nejsou zde uložené žádné obrázky"
+        android:textSize="17sp"
+        android:textColor="#888888"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/btnBack"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="8dp" />
+
+    <!-- Seznam obrázků -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvImages"
+        android:layout_width="379dp"
+        android:layout_height="620dp"
+        android:padding="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvImageCount"
+        app:layout_constraintVertical_bias="0.693" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
