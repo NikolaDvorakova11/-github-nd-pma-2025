@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/tvTitle"
         android:text="Hod kostkou"
-        android:textSize="28sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:layout_marginBottom="30dp"
         android:layout_width="wrap_content"
