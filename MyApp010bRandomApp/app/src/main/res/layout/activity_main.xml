@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="#F5F5F5">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="Hod kostkou"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="40dp">
+
+        <ImageView
+            android:id="@+id/ivDice1"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/dice1"
+            android:layout_margin="10dp"/>
+
+        <ImageView
+            android:id="@+id/ivDice2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/dice1"
+            android:layout_margin="10dp"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <!-- TEXT PRO SOUČET (zobrazuje se jen při dvou kostkách) -->
+    <TextView
+        android:id="@+id/tvSum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Součet: 0"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#4CAF50"
+        android:layout_marginBottom="30dp"
+        android:visibility="gone"/>
+
+    <Switch
+        android:id="@+id/switchTwoDice"
+        android:text="Házet dvě kostky"
+        android:layout_marginBottom="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnRoll"
+        android:text="Hodit kostkou"
+        android:textSize="18sp"
+        android:padding="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
