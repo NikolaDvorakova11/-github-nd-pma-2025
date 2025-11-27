@@ -1,7 +1,9 @@
 package com.example.myapp014asharedtasklist
 
 import android.os.Bundle
+import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -29,7 +31,8 @@ class MainActivity : AppCompatActivity() {
         adapter = TaskAdapter(
             tasks = emptyList(),
             onChecked = { task -> toggleCompleted(task) },
-            onDelete = { task -> deleteTask(task) }
+            onDelete = { task -> deleteTask(task) },
+            onEdit = { task -> editTask(task) } //Přidáno pro úkol 2 - editace
         )
 
         binding.recyclerViewTasks.adapter = adapter
@@ -67,7 +70,25 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // Úkol 2 - Editace
+    private fun editTask(task: Task) {
+        val editText = EditText(this)
+        editText.setText(task.title)
 
+        AlertDialog.Builder(this)
+            .setTitle("Upravit úkol")
+            .setView(editText)
+            .setPositiveButton("Uložit") { _, _ ->
+                val newTitle = editText.text.toString()
+                if (newTitle.isNotEmpty()) {
+                    db.collection("tasks")
+                        .document(task.id)
+                        .update("title", newTitle)
+                }
+            }
+            .setNegativeButton("Zrušit", null)
+            .show()
+    }
     private fun listenForTasks() {
         db.collection("tasks")
             // Sleduje kolekci tasks v reálném čase
