@@ -64,9 +64,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun deleteTask(task: Task) {
-        db.collection("tasks")
-            .document(task.id)
-            .delete()
+//        db.collection("tasks")
+//            .document(task.id)
+//            .delete()
+
+        //Upraveno, aby to se objevoval Alert
+        AlertDialog.Builder(this)
+            .setTitle("Smazat úkol")
+            .setMessage("Opravdu chcete tento úkol smazat?")
+            .setPositiveButton("Ano") { _, _ ->
+                db.collection("tasks")
+                    .document(task.id)
+                    .delete()
+            }
+            .setNegativeButton("Ne", null)
+            .show()
 
     }
 
