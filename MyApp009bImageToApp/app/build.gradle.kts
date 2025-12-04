@@ -33,6 +33,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    //Přidáno - Aktivace ViewBindingu pro práci s UI prvky
     buildFeatures {
         viewBinding = true
     }
@@ -49,7 +50,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    //Přidáno
+    //Přidáno – knihovny pro galerii
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 }
