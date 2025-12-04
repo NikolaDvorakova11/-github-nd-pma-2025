@@ -10,8 +10,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -22,6 +26,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 
@@ -29,6 +35,7 @@ data class TodoItem(
     val title: String,
     val isDone: Boolean = false
 )
+
 @Composable
 fun ToDoScreen(modifier: Modifier = Modifier) {
     /*Text("TO-DO SCREEN",
@@ -40,6 +47,9 @@ fun ToDoScreen(modifier: Modifier = Modifier) {
 
     // Stav seznamu úkolů
     val tasks = remember { mutableStateListOf<TodoItem>() }
+
+    // Úkol – stav pro dialog smazání
+    var taskToDelete by remember { mutableStateOf<TodoItem?>(null) }
 
     Column(
         modifier = modifier.padding(16.dp)
@@ -82,7 +92,10 @@ fun ToDoScreen(modifier: Modifier = Modifier) {
                         .clickable {
                             val index = tasks.indexOf(task)
                             tasks[index] = task.copy(isDone = !task.isDone)
-                        }
+                        },
+                    colors = CardDefaults.cardColors(
+                        containerColor = if (task.isDone) Color(0xFFBBDEFB) else Color.White   // ÚKOL - změna barvy pole v případě, že je přeškrtnuta
+                    )
                 ) {
                     Row(
                         modifier = Modifier
@@ -95,14 +108,39 @@ fun ToDoScreen(modifier: Modifier = Modifier) {
                             textDecoration = if (task.isDone) TextDecoration.LineThrough else TextDecoration.None
                         )
 
-                        TextButton(onClick = {
-                            tasks.remove(task)
-                        }) {
-                            Text("Smazat")
+                        // ÚKOL – místo TextButton používáme IconButton
+                        IconButton(
+                            onClick = { taskToDelete = task }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.outline_delete_24),
+                                contentDescription = "Smazat úkol"
+                            )
                         }
                     }
                 }
             }
+        }
+        // ÚKOL – potvrzovací dialog
+        if (taskToDelete != null) {
+            AlertDialog(
+                onDismissRequest = { taskToDelete = null },
+                title = { Text("Potvrzení smazání") },
+                text = { Text("Opravdu chcete smazat tuto poznámku?") },
+                confirmButton = {
+                    TextButton(onClick = {
+                        tasks.remove(taskToDelete)
+                        taskToDelete = null
+                    }) {
+                        Text("Ano")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { taskToDelete = null }) {
+                        Text("Ne")
+                    }
+                }
+            )
         }
     }
 }
