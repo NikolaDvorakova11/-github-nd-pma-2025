@@ -25,6 +25,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -50,6 +51,8 @@ fun ToDoScreen(modifier: Modifier = Modifier) {
 
     // Úkol – stav pro dialog smazání
     var taskToDelete by remember { mutableStateOf<TodoItem?>(null) }
+    // Úkol - dialog pro smazání všech splněných úkolů
+    var showDeleteCompletedDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier.padding(16.dp)
@@ -81,6 +84,28 @@ fun ToDoScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
 
 
+        // ÚKOL - status úkolů
+        val total = tasks.size
+        val done = tasks.count { it.isDone }
+
+        Text(
+            text = "$total úkolů celkem, $done splněno",
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+
+        //Úkol - vložení tlačítka pro smazání všech hotových úkolů
+        Button(
+            onClick = { showDeleteCompletedDialog = true },
+            enabled = tasks.any { it.isDone },   // aktivní jen když existují hotové úkoly
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text("Vymazat všechny hotové úkoly")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
         // ----- Seznam úkolů -----
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -94,7 +119,7 @@ fun ToDoScreen(modifier: Modifier = Modifier) {
                             tasks[index] = task.copy(isDone = !task.isDone)
                         },
                     colors = CardDefaults.cardColors(
-                        containerColor = if (task.isDone) Color(0xFFBBDEFB) else Color.White   // ÚKOL - změna barvy pole v případě, že je přeškrtnuta
+                        containerColor = if (task.isDone) Color(0xFFA1E165) else Color.White   // ÚKOL - změna barvy pole v případě, že je přeškrtnuta
                     )
                 ) {
                     Row(
@@ -121,7 +146,7 @@ fun ToDoScreen(modifier: Modifier = Modifier) {
                 }
             }
         }
-        // ÚKOL – potvrzovací dialog
+        // ÚKOL – potvrzovací dialog o smazání
         if (taskToDelete != null) {
             AlertDialog(
                 onDismissRequest = { taskToDelete = null },
@@ -142,5 +167,27 @@ fun ToDoScreen(modifier: Modifier = Modifier) {
                 }
             )
         }
+    }
+
+    // ÚKOL – dialog smazat všechny hotové úkoly
+    if (showDeleteCompletedDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteCompletedDialog = false },
+            title = { Text("Smazat hotové úkoly") },
+            text = { Text("Opravdu chcete smazat všechny dokončené úkoly?") },
+            confirmButton = {
+                TextButton(onClick = {
+                    tasks.removeAll { it.isDone }
+                    showDeleteCompletedDialog = false
+                }) {
+                    Text("Smazat", color = Color.Red)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteCompletedDialog = false }) {
+                    Text("Zrušit")
+                }
+            }
+        )
     }
 }
