@@ -34,15 +34,16 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- 3) Font size -->
+
         <Button
             android:id="@+id/buttonSaveUsername"
-            android:text="Uložit jméno"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="end"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="8dp"
+            android:text="Uložit jméno" />
 
-        <!-- 3) Font size -->
         <TextView
             android:id="@+id/textFontSizeValue"
             android:text="Velikost: 16"
