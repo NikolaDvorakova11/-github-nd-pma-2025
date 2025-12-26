@@ -1,5 +1,6 @@
 package com.example.vanocniapp.ui
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.vanocniapp.R
 import com.example.vanocniapp.data.UserPreferencesRepository
 import com.example.vanocniapp.databinding.FragmentCalendarBinding
 import kotlinx.coroutines.flow.collectLatest
@@ -36,11 +38,11 @@ class CalendarFragment : Fragment() {
 
         setupRecyclerView()
         observeOpenedDays()
+        loadPuzzle()
     }
 
     private fun setupRecyclerView() {
         calendarAdapter = CalendarAdapter { day ->
-            // Uložíme otevřený den a pak přejdeme na detail
             lifecycleScope.launch {
                 userPreferencesRepository.addOpenedDay(day)
             }
@@ -56,10 +58,22 @@ class CalendarFragment : Fragment() {
 
     private fun observeOpenedDays() {
         lifecycleScope.launch {
-            // Sledujeme Flow a při každé změně aktualizujeme adapter
             userPreferencesRepository.openedDaysFlow.collectLatest {
                 calendarAdapter.setOpenedDays(it)
             }
+        }
+    }
+
+    /**
+     * Načte obrázek skládačky z drawable a předá ho adaptéru.
+     */
+    private fun loadPuzzle() {
+        try {
+            val puzzleBitmap = BitmapFactory.decodeResource(resources, R.drawable.puzzle_image)
+            calendarAdapter.setPuzzleImage(puzzleBitmap)
+        } catch (e: Exception) {
+            // Zde by se hodilo zalogovat chybu, pokud obrázek neexistuje
+            // Prozatím to necháme takto, aby aplikace nespadla.
         }
     }
 
