@@ -1,27 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp"
     tools:context=".ui.DayDetailFragment">
 
-    <TextView
-        android:id="@+id/dayTitleTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceDisplayMedium"
-        tools:text="1. prosince" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp">
 
-    <TextView
-        android:id="@+id/surpriseTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textAlignment="center"
-        android:textAppearance="?attr/textAppearanceBodyLarge"
-        tools:text="Dnes je první den adventu! Usměj se a dej si horkou čokoládu." />
+        <TextView
+            android:id="@+id/dayTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceDisplaySmall"
+            tools:text="1. prosince" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/surpriseTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceHeadlineMedium"
+            tools:text="Vánoční zajímavost" />
+            
+        <TextView
+            android:id="@+id/surpriseContentTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:lineSpacingMultiplier="1.2"
+            android:textAlignment="textStart"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            tools:text="Dlouhý text receptu, tipu nebo zajímavosti, který se může rolovat..." />
+
+    </LinearLayout>
+</ScrollView>
