@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/calendarFragment">
+
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.vanocniapp.ui.CalendarFragment"
+        android:label="Kalendář">
+        <action
+            android:id="@+id/action_calendarFragment_to_dayDetailFragment"
+            app:destination="@id/dayDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dayDetailFragment"
+        android:name="com.example.vanocniapp.ui.DayDetailFragment"
+        android:label="Detail dne">
+        <argument
+            android:name="day"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.vanocniapp.ui.SettingsFragment"
+        android:label="Nastavení" />
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.vanocniapp.ui.AboutFragment"
+        android:label="O aplikaci" />
+</navigation>
