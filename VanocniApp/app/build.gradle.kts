@@ -52,6 +52,6 @@ dependencies {
     // RecyclerView for calendar
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 
-    // DataStore - vráceno na moderní a stabilní verzi
+    // DataStore
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 }

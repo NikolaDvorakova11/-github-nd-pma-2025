@@ -1,15 +1,18 @@
 package com.example.vanocniapp.ui
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.example.vanocniapp.R
 import com.example.vanocniapp.databinding.FragmentDayDetailBinding
 
-// Datová třída pro denní překvapení s nadpisem a obsahem
-data class DailySurprise(val title: String, val content: String)
+// Rozšířená datová třída, která obsahuje i odkaz na obrázek
+data class DailySurprise(val title: String, val content: String, @DrawableRes val imageResId: Int)
 
 class DayDetailFragment : Fragment() {
 
@@ -18,33 +21,36 @@ class DayDetailFragment : Fragment() {
 
     private val args: DayDetailFragmentArgs by navArgs()
 
-    // Zbrusu nový seznam 24 překvapení
-    private val surprises = listOf(
-        DailySurprise("Vánoční zajímavost", "Věděli jste, že tradice zdobení vánočního stromečku pochází z Německa 16. století? Původně se zdobil jablky, ořechy a papírovými květinami."),
-        DailySurprise("Tip na aktivitu", "Udělejte si čas a napište dopis Ježíškovi. Není to jen pro děti! Napište svá přání, sny nebo jen to, za co jste vděční."),
-        DailySurprise("Recept: Horká čokoláda", "Potřebujete: 200 ml mléka, 50 g kvalitní hořké čokolády, špetku skořice a lžičku cukru. Mléko zahřejte, rozpusťte v něm čokoládu, přidejte skořici, cukr a pořádně promíchejte. Můžete ozdobit šlehačkou!"),
-        DailySurprise("Tip na film", "Sám doma (1990) - Absolutní klasika, která nikdy neomrzí. Příběh Kevina, kterého rodina zapomene doma na Vánoce, zná snad každý."),
-        DailySurprise("Vánoční zajímavost", "Největší vánoční dárek na světě byla Socha Svobody. Francie ji darovala USA v roce 1886 jako symbol přátelství."),
-        DailySurprise("Recept: Perníčky", "Smíchejte 400g hladké mouky, 140g moučkového cukru, 100g másla, 2 vejce, 2 lžíce medu a 1 lžičku perníkového koření. Vypracujte těsto, nechte odležet, vykrajujte a pečte na 180°C asi 10 minut."),
-        DailySurprise("Tip na aktivitu", "Vyrazte na procházku a obdivujte vánoční výzdobu ve vašem městě. Zkuste najít tu nejkrásnější a vyfoťte se u ní."),
-        DailySurprise("Vánoční zajímavost", "V Japonsku je díky masivní marketingové kampani z roku 1974 zvykem jíst na Vánoce smažené kuře z KFC. Objednávky se dělají i měsíce dopředu!"),
-        DailySurprise("Tip na film", "Láska nebeská (2003) - Deset různých příběhů o lásce, které se protnou na Štědrý den v Londýně. Film, který vás zaručeně dojme i rozesměje."),
-        DailySurprise("Recept: Vaječný koňak", "Ušlehejte 4 žloutky s 200g cukru. Přilijte 250 ml smetany ke šlehání a 250 ml rumu. Vše dobře promíchejte a nechte vychladit. Na zdraví!"),
-        DailySurprise("Tip na aktivitu", "Vyrobte si vlastní vánoční ozdobu. Může to být cokoliv - papírová hvězda, malovaná šiška nebo ozdoba ze slaného těsta."),
-        DailySurprise("Vánoční zajímavost", "Píseň \"Jingle Bells\" byla původně napsána pro Den díkůvzdání, ne pro Vánoce. Postupem času se ale stala jedním z nejznámějších vánočních symbolů."),
-        DailySurprise("Tip na film", "Grinch (2000) - Příběh o zeleném mrzoutovi, který se snaží ukrást Vánoce. Skvělý Jim Carrey v jedné ze svých nejlepších rolí."),
-        DailySurprise("Recept: Svařené víno", "Do hrnce nalijte 0,7l červeného vína. Přidejte celou skořici, pár hřebíčků, 2 hvězdičky badyánu a plátky pomeranče. Pomalu zahřívejte (nevařte!) a podle chuti oslaďte medem nebo cukrem."),
-        DailySurprise("Tip na aktivitu", "Vytvořte si vánoční playlist. Dejte dohromady své oblíbené vánoční písně a poslouchejte ho při pečení, uklízení nebo jen tak při relaxaci."),
-        DailySurprise("Vánoční zajímavost", "Island má 13 vánočních skřítků (Yule Lads), kteří postupně přicházejí do měst 13 dní před Vánoci. Každý z nich provádí nějakou neplechu."),
-        DailySurprise("Tip na film", "Polární expres (2004) - Kouzelný animovaný film o chlapci, který na Štědrý večer nastoupí do vlaku směřujícího na severní pól."),
-        DailySurprise("Tip na aktivitu", "Zabalte první dárek. Pusťte si k tomu koledy, uvařte si čaj a užijte si tu chvíli klidu a těšení se."),
-        DailySurprise("Vánoční zajímavost", "Proč je na špičce stromečku hvězda? Symbolizuje Betlémskou hvězdu, která podle bible dovedla Tři krále k nově narozenému Ježíškovi."),
-        DailySurprise("Recept: Vosí hnízda", "Umelte 150g piškotů, přidejte 60g moučkového cukru, 60g másla a 2 lžíce rumu. Těsto vtlačte do formičky, udělejte důlek a naplňte vaječným koňakem. Přilepte na piškot."),
-        DailySurprise("Tip na film", "Tři oříšky pro Popelku (1973) - Česká vánoční pohádka, bez které si svátky neumíme představit. Libuše Šafránková jako Popelka je nezapomenutelná."),
-        DailySurprise("Tip na aktivitu", "Zavolejte někomu, s kým jste dlouho nemluvili. Babičce, dědovi nebo starému kamarádovi. Krátký telefonát může udělat obrovskou radost."),
-        DailySurprise("Vánoční zajímavost", "V Mexiku se Vánoce slaví od 12. prosince do 6. ledna. Děti dostávají dárky až na Tři krále, a místo adventního věnce mají Poinsettii, známou jako vánoční hvězda."),
-        DailySurprise("Štědrý den", "Přejeme ti nádherný Štědrý den plný klidu, pohody a radosti v kruhu tvých nejbližších. Šťastné a veselé Vánoce!")
-    )
+    // Rozšířený seznam překvapení s texty a obrázky
+    // Předpokládá se, že obrázky day_1, day_2, atd. existují v res/drawable
+    private val surprises by lazy {
+        listOf(
+            DailySurprise("Vánoční zajímavost", "Tradice zdobení vánočního stromečku pochází z Německa 16. století.", R.drawable.day_1),
+            DailySurprise("Tip na aktivitu", "Napište dopis Ježíškovi. Není to jen pro děti!", R.drawable.day_2),
+            DailySurprise("Recept: Horká čokoláda", "Zahřejte mléko a rozpusťte v něm kvalitní hořkou čokoládu.", R.drawable.day_3),
+            DailySurprise("Tip na film", "Sám doma (1990) - Absolutní klasika, která nikdy neomrzí.", R.drawable.day_4),
+            DailySurprise("Vánoční zajímavost", "Největší vánoční dárek na světě byla Socha Svobody.", R.drawable.day_5),
+            DailySurprise("Recept: Perníčky", "Vypracujte těsto, nechte odležet, vykrajujte a pečte.", R.drawable.day_6),
+            DailySurprise("Tip na aktivitu", "Vyrazte na procházku a obdivujte vánoční výzdobu ve vašem městě.", R.drawable.day_7),
+            DailySurprise("Vánoční zajímavost", "V Japonsku je zvykem jíst na Vánoce smažené kuře z KFC.", R.drawable.day_8),
+            DailySurprise("Tip na film", "Láska nebeská (2003) - Deset různých příběhů o lásce, které se protnou na Štědrý den.", R.drawable.day_9),
+            DailySurprise("Recept: Vaječný koňak", "Ušlehejte žloutky s cukrem, přilijte smetanu a rum.", R.drawable.day_10),
+            DailySurprise("Tip na aktivitu", "Vyrobte si vlastní vánoční ozdobu z papíru nebo slaného těsta.", R.drawable.day_11),
+            DailySurprise("Vánoční zajímavost", "Píseň \"Jingle Bells\" byla původně napsána pro Den díkůvzdání.", R.drawable.day_12),
+            DailySurprise("Tip na film", "Grinch (2000) - Příběh o zeleném mrzoutovi, který se snaží ukrást Vánoce.", R.drawable.day_13),
+            DailySurprise("Recept: Svařené víno", "Zahřejte červené víno s kořením a plátky pomeranče.", R.drawable.day_14),
+            DailySurprise("Tip na aktivitu", "Vytvořte si vánoční playlist svých oblíbených písní.", R.drawable.day_15),
+            DailySurprise("Vánoční zajímavost", "Island má 13 vánočních skřítků (Yule Lads).", R.drawable.day_16),
+            DailySurprise("Tip na film", "Polární expres (2004) - Kouzelný animovaný film o cestě na severní pól.", R.drawable.day_17),
+            DailySurprise("Tip na aktivitu", "Zabalte první dárek a pusťte si k tomu koledy.", R.drawable.day_18),
+            DailySurprise("Vánoční zajímavost", "Hvězda na špičce stromečku symbolizuje Betlémskou hvězdu.", R.drawable.day_19),
+            DailySurprise("Recept: Vosí hnízda", "Umelte piškoty, smíchejte s máslem, cukrem a rumem.", R.drawable.day_20),
+            DailySurprise("Tip na film", "Tři oříšky pro Popelku (1973) - Česká vánoční pohádka, bez které si svátky neumíme představit.", R.drawable.day_21),
+            DailySurprise("Tip na aktivitu", "Zavolejte někomu, s kým jste dlouho nemluvili.", R.drawable.day_22),
+            DailySurprise("Vánoční zajímavost", "V Mexiku je hlavním symbolem Vánoc květina Poinsettia (vánoční hvězda).", R.drawable.day_23),
+            DailySurprise("Štědrý den", "Přejeme ti nádherný Štědrý den plný klidu, pohody a radosti.", R.drawable.day_24)
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,15 +66,15 @@ class DayDetailFragment : Fragment() {
         val day = args.day
         binding.dayTitleTextView.text = "$day. prosince"
 
-        // Najdeme překvapení pro daný den
         val surprise = surprises.getOrNull(day - 1)
         if (surprise != null) {
             binding.surpriseTitleTextView.text = surprise.title
             binding.surpriseContentTextView.text = surprise.content
+            binding.surpriseImageView.setImageResource(surprise.imageResId)
         } else {
-            // Záložní text, pokud by se den nenašel
             binding.surpriseTitleTextView.text = "Chyba"
             binding.surpriseContentTextView.text = "Pro tento den se nám bohužel zatoulalo překvapení."
+            binding.surpriseImageView.visibility = View.GONE
         }
     }
 

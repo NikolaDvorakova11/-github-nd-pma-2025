@@ -1,15 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp"
+    android:background="@android:color/white"
     tools:context=".ui.SettingsFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Zde bude obrazovka s nastavením."
-        android:textAppearance="?attr/textAppearanceBodyLarge"/>
+        android:text="Obecné"
+        android:textAppearance="?attr/textAppearanceTitleMedium" />
 
-</FrameLayout>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/resetCalendarCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resetovat kalendář"
+                android:textAppearance="?attr/textAppearanceBodyLarge"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Smaže všechna otevřená políčka a vrátí kalendář do původního stavu."
+                android:textAppearance="?attr/textAppearanceBodyMedium"/>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Pro vývojáře"
+        android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/setDateCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/setDateTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ručně nastavit datum"
+                android:textAppearance="?attr/textAppearanceBodyLarge"/>
+
+            <TextView
+                android:id="@+id/currentMockDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setDateTitle"
+                android:layout_marginTop="4dp"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                tools:text="Aktuální testovací datum: 1. 12. 2024"/>
+
+            <Button
+                android:id="@+id/clearDateButton"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:text="Zrušit"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

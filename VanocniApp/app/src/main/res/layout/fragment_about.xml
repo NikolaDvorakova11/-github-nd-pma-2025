@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@android:color/white"
     tools:context=".ui.AboutFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vánoční aplikace vytvořená v rámci studia."
-        android:textAppearance="?attr/textAppearanceBodyLarge"/>
+        android:layout_marginTop="16dp"
+        android:text="Vánoční Kalendář"
+        android:textAppearance="?attr/textAppearanceHeadlineMedium" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/aboutContentTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:lineSpacingMultiplier="1.2"
+        android:textAlignment="center"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
+        tools:text="Vítejte ve Vánočním adventním kalendáři!..." />
+
+    <ImageView
+        android:layout_width="167dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="Vánoční hvězda"
+        android:scaleType="fitCenter"
+        android:src="@drawable/star" />
+
+</LinearLayout>

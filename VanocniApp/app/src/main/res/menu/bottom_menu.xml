@@ -9,4 +9,9 @@
         android:id="@+id/settingsFragment"
         android:title="Nastavení"
         android:icon="@android:drawable/ic_menu_preferences"/>
+
+    <item
+        android:id="@+id/aboutFragment"
+        android:title="O aplikaci"
+        android:icon="@android:drawable/ic_menu_info_details"/>
 </menu>

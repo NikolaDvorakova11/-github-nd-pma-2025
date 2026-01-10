@@ -2,9 +2,11 @@ package com.example.vanocniapp.ui
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -13,7 +15,9 @@ import com.example.vanocniapp.R
 import com.example.vanocniapp.data.UserPreferencesRepository
 import com.example.vanocniapp.databinding.FragmentCalendarBinding
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class CalendarFragment : Fragment() {
 
@@ -44,15 +48,49 @@ class CalendarFragment : Fragment() {
     private fun setupRecyclerView() {
         calendarAdapter = CalendarAdapter { day ->
             lifecycleScope.launch {
-                userPreferencesRepository.addOpenedDay(day)
+                // Zjistíme, jestli je nastavené testovací datum
+                val mockDate = userPreferencesRepository.mockDateFlow.first()
+                val calendar = Calendar.getInstance()
+                if (mockDate != null) {
+                    calendar.timeInMillis = mockDate
+                }
+
+                val today = calendar.get(Calendar.DAY_OF_MONTH)
+                val month = calendar.get(Calendar.MONTH)
+
+                // Pokud je prosinec a den je v budoucnosti (podle reálného nebo testovacího data)...
+                if (month == Calendar.DECEMBER && day > today) {
+                    // ...zobrazíme varovný dialog.
+                    showFutureDayConfirmationDialog(day)
+                } else {
+                    // Jinak den rovnou otevřeme/zavřeme.
+                    toggleDayAndNavigate(day)
+                }
             }
-            val action = CalendarFragmentDirections.actionCalendarFragmentToDayDetailFragment(day)
-            findNavController().navigate(action)
         }
 
         binding.calendarRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 4)
             adapter = calendarAdapter
+        }
+    }
+
+    private fun showFutureDayConfirmationDialog(day: Int) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Jste si jistí?")
+            .setMessage("Opravdu chcete otevřít políčko a zkazit si překvapení?")
+            .setPositiveButton("Ano, jsem zvědavý/á") { _, _ -> toggleDayAndNavigate(day) }
+            .setNegativeButton("Ne, vydržím to", null)
+            .show()
+    }
+
+    private fun toggleDayAndNavigate(day: Int) {
+        lifecycleScope.launch {
+            val isNowOpen = userPreferencesRepository.toggleDayState(day)
+            if (isNowOpen) {
+                val action = CalendarFragmentDirections.actionCalendarFragmentToDayDetailFragment(day)
+                findNavController().navigate(action)
+            }
         }
     }
 
@@ -64,16 +102,16 @@ class CalendarFragment : Fragment() {
         }
     }
 
-    /**
-     * Načte obrázek skládačky z drawable a předá ho adaptéru.
-     */
     private fun loadPuzzle() {
         try {
             val puzzleBitmap = BitmapFactory.decodeResource(resources, R.drawable.puzzle_image)
-            calendarAdapter.setPuzzleImage(puzzleBitmap)
+            if (puzzleBitmap != null) {
+                calendarAdapter.setPuzzleImage(puzzleBitmap)
+            } else {
+                Log.e("CalendarFragment", "Chyba: Soubor 'puzzle_image.jpg' nebyl nalezen ve složce res/drawable.")
+            }
         } catch (e: Exception) {
-            // Zde by se hodilo zalogovat chybu, pokud obrázek neexistuje
-            // Prozatím to necháme takto, aby aplikace nespadla.
+            Log.e("CalendarFragment", "Došlo k výjimce při načítání obrázku skládačky.", e)
         }
     }
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".ui.DayDetailFragment">
 
     <LinearLayout
@@ -36,7 +37,16 @@
             android:lineSpacingMultiplier="1.2"
             android:textAlignment="textStart"
             android:textAppearance="?attr/textAppearanceBodyLarge"
-            tools:text="Dlouhý text receptu, tipu nebo zajímavosti, který se může rolovat..." />
+            tools:text="Dlouhý text receptu, tipu nebo zajímavosti..." />
+
+        <ImageView
+            android:id="@+id/surpriseImageView"
+            android:layout_width="match_parent"
+            android:layout_height="358dp"
+            android:layout_marginTop="24dp"
+            android:contentDescription="Obrázek k překvapení"
+            android:scaleType="fitCenter"
+            tools:src="@tools:sample/backgrounds/scenic" />
 
     </LinearLayout>
 </ScrollView>
