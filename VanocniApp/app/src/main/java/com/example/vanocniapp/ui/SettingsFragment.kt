@@ -49,7 +49,6 @@ class SettingsFragment : Fragment() {
         binding.clearDateButton.setOnClickListener { clearMockDate() }
     }
 
-    /** Sleduje a zobrazuje aktuální testovací datum. */
     private fun observeMockDate() {
         lifecycleScope.launch {
             userPreferencesRepository.mockDateFlow.collectLatest {
@@ -65,13 +64,22 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    /** Zobrazí dialog pro výběr data. */
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
         DatePickerDialog(
             requireContext(),
             { _, year, month, dayOfMonth ->
-                val selectedDate = Calendar.getInstance().apply { set(year, month, dayOfMonth) }
+                // Správný a bezpečný způsob, jak nastavit datum bez časových chyb
+                val selectedDate = Calendar.getInstance().apply {
+                    set(Calendar.YEAR, year)
+                    set(Calendar.MONTH, month)
+                    set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    // Vynulujeme čas, abychom se vyhnuli problémům s časovými zónami
+                    set(Calendar.HOUR_OF_DAY, 0)
+                    set(Calendar.MINUTE, 0)
+                    set(Calendar.SECOND, 0)
+                    set(Calendar.MILLISECOND, 0)
+                }
                 lifecycleScope.launch {
                     userPreferencesRepository.setMockDate(selectedDate.timeInMillis)
                 }
@@ -82,7 +90,6 @@ class SettingsFragment : Fragment() {
         ).show()
     }
 
-    /** Smaže nastavené testovací datum. */
     private fun clearMockDate() {
         lifecycleScope.launch {
             userPreferencesRepository.clearMockDate()
