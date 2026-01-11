@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- ConstraintLayout je pokročilý kontejner, který umožňuje vytvářet flexibilní a responzivní layouty.
+     Je to jako "pavučina", kde každý prvek přichytáváme (constrain) k jiným prvkům nebo k okraji obrazovky -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,6 +9,8 @@
     android:background="@android:color/white"
     tools:context=".ui.CalendarFragment">
 
+    <!-- RecyclerView je velmi efektivní komponenta pro zobrazování velkého množství dat (v našem případě 24 políček).
+         Načítá do paměti jen ty položky, které jsou zrovna vidět na obrazovce, což šetří výkon -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecyclerView"
         android:layout_width="0dp"

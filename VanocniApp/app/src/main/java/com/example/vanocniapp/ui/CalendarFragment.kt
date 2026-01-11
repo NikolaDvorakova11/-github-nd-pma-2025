@@ -25,8 +25,10 @@ class CalendarFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var calendarAdapter: CalendarAdapter
+    // Repository je třída, která se stará o ukládání dat (např. které dny jsou otevřené)
     private lateinit var userPreferencesRepository: UserPreferencesRepository
 
+    // Vytvoříme layout pro fragment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,20 +37,24 @@ class CalendarFragment : Fragment() {
         return binding.root
     }
 
+    // Zobrazujeme fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Vytvoříme repository --> incicializujeme úložiště dat
         userPreferencesRepository = UserPreferencesRepository(requireContext())
 
-        setupRecyclerView()
-        observeOpenedDays()
-        loadPuzzle()
+        setupRecyclerView()     // Nastavíme recycler view --> mřížku (grid)
+        observeOpenedDays()     // Začneme sledovat změny v otevřených dnech (co je otevřeno)
+        loadPuzzle()            // Načteme obrázek skládačky
     }
 
+    // Nastavení mřížky 4x6 pro 24 políček
     private fun setupRecyclerView() {
+        // Tato část se spustí, když klikneš na políčko (číslo dne)
         calendarAdapter = CalendarAdapter { day ->
             lifecycleScope.launch {
-                // Zjistíme, jestli je nastavené testovací datum
+                // Zjistíme "aktuální čas" (buď reálný, nebo ten nastavený v testování)
                 val mockDate = userPreferencesRepository.mockDateFlow.first()
                 val calendar = Calendar.getInstance()
                 if (mockDate != null) {
@@ -60,21 +66,23 @@ class CalendarFragment : Fragment() {
 
                 // Pokud je prosinec a den je v budoucnosti (podle reálného nebo testovacího data)...
                 if (month == Calendar.DECEMBER && day > today) {
-                    // ...zobrazíme varovný dialog.
+                    // ...zobrazíme varovný dialog
                     showFutureDayConfirmationDialog(day)
                 } else {
-                    // Jinak den rovnou otevřeme/zavřeme.
+                    // Jinak den rovnou otevřeme
                     toggleDayAndNavigate(day)
                 }
             }
         }
 
         binding.calendarRecyclerView.apply {
+            // GridLayoutManager se stará o to, aby políčka byla v mřížce (4 sloupce)
             layoutManager = GridLayoutManager(context, 4)
             adapter = calendarAdapter
         }
     }
 
+    // Dialog, který vyskočí, když je uživatel nedočkavý
     private fun showFutureDayConfirmationDialog(day: Int) {
         AlertDialog.Builder(requireContext())
             .setTitle("Jste si jistí?")
@@ -84,16 +92,20 @@ class CalendarFragment : Fragment() {
             .show()
     }
 
+    // Tato funkce uloží, že den je otevřený, a přepne nás na detailní obrazovku
     private fun toggleDayAndNavigate(day: Int) {
         lifecycleScope.launch {
             val isNowOpen = userPreferencesRepository.toggleDayState(day)
             if (isNowOpen) {
+                // Navigace na obrazovku DayDetailFragment s předáním čísla dne
                 val action = CalendarFragmentDirections.actionCalendarFragmentToDayDetailFragment(day)
                 findNavController().navigate(action)
             }
         }
     }
 
+    // "Posluchač", který hlídá změny v datech.
+    // Jakmile se v databázi změní stav (otevření dne), adapter políčka okamžitě překreslí.
     private fun observeOpenedDays() {
         lifecycleScope.launch {
             userPreferencesRepository.openedDaysFlow.collectLatest {
@@ -102,6 +114,7 @@ class CalendarFragment : Fragment() {
         }
     }
 
+    // Načte velký obrázek z prostředků aplikace (res/drawable/puzzle_image)
     private fun loadPuzzle() {
         try {
             val puzzleBitmap = BitmapFactory.decodeResource(resources, R.drawable.puzzle_image)

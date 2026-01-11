@@ -11,7 +11,10 @@ import androidx.navigation.fragment.navArgs
 import com.example.vanocniapp.R
 import com.example.vanocniapp.databinding.FragmentDayDetailBinding
 
-// Rozšířená datová třída, která obsahuje i odkaz na obrázek
+
+// DATOVÁ TŘÍDA (Model)
+// Představuje strukturu jednoho překvapení.
+// @DrawableRes říká, že imageResId musí být odkaz na obrázek ze složky res/drawable.
 data class DailySurprise(val title: String, val content: String, @DrawableRes val imageResId: Int)
 
 class DayDetailFragment : Fragment() {
@@ -19,10 +22,14 @@ class DayDetailFragment : Fragment() {
     private var _binding: FragmentDayDetailBinding? = null
     private val binding get() = _binding!!
 
+    // PŘIJÍMÁNÍ DAT
+    // Tímto řádkem fragment získá číslo dne, které mu poslal CalendarFragment
     private val args: DayDetailFragmentArgs by navArgs()
 
-    // Rozšířený seznam překvapení s texty a obrázky
-    // Předpokládá se, že obrázky day_1, day_2, atd. existují v res/drawable
+
+    // SEZNAM PŘEKVAPENÍ (Databáze textů)
+    // 'by lazy' znamená, že se tento seznam vytvoří v paměti až ve chvíli, kdy je poprvé potřeba.
+
     private val surprises by lazy {
         listOf(
             DailySurprise("Vánoční zajímavost", "Tradice zdobení vánočního stromečku pochází z Německa 16. století.", R.drawable.day_1),
@@ -63,15 +70,21 @@ class DayDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Získáme číslo dne z argumentů (např. 5)
         val day = args.day
+        // Nastavíme hlavní nadpis (např. 5. prosince)
         binding.dayTitleTextView.text = "$day. prosince"
 
+        // VYHLEDÁNÍ SPRÁVNÉHO PŘEKVAPENÍ
+        // Seznamy v programování začínají nulou, proto day - 1 (den 1 je na pozici 0).
         val surprise = surprises.getOrNull(day - 1)
         if (surprise != null) {
+            // pokud jsme překvapení našli, naplníme jím připravené prvky v XML
             binding.surpriseTitleTextView.text = surprise.title
             binding.surpriseContentTextView.text = surprise.content
             binding.surpriseImageView.setImageResource(surprise.imageResId)
         } else {
+            // Bezpečnostní pojistka, kdyby někdo zkusil otevřít např. 25. den
             binding.surpriseTitleTextView.text = "Chyba"
             binding.surpriseContentTextView.text = "Pro tento den se nám bohužel zatoulalo překvapení."
             binding.surpriseImageView.visibility = View.GONE

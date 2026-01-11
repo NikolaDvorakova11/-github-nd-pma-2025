@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- ScrollView je kontejner, který umožňuje, aby jeho obsah byl delší než obrazovka.
+     Pokud se obsah nevejde, uživatel jím může jednoduše rolovat nahoru a dolů. -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,6 +8,7 @@
     android:background="@android:color/white"
     tools:context=".ui.DayDetailFragment">
 
+    <!-- LinearLayout je vnitřní kontejner, který organizuje všechny prvky (texty, obrázek) pod sebe.-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

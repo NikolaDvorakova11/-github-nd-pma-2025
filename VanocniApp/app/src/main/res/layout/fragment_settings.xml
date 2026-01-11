@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Kořenový LinearLayout, který skládá všechny prvky pod sebe do jednoho sloupce. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,6 +15,7 @@
         android:text="Obecné"
         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
+    <!-- Klikatelná "karta", která slouží jako tlačítko pro resetování kalendáře. -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/resetCalendarCard"
         android:layout_width="match_parent"
@@ -52,6 +54,7 @@
         android:text="Pro vývojáře"
         android:textAppearance="?attr/textAppearanceTitleMedium" />
 
+    <!-- Karta pro nastavení testovacího data. -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/setDateCard"
         android:layout_width="match_parent"

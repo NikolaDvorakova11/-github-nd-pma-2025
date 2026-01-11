@@ -10,19 +10,22 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.vanocniapp.databinding.ActivityMainBinding
 
+// MainActivity je hlavní aktivitou aplikace, která obsahuje navigaci mezi fragmenty
 class MainActivity : AppCompatActivity() {
-
+    // Deklarace proměnných (Teď tu proměnnou vytvořím, ale hodnotu do ní vložím až za chvíli (v onCreate))
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    // Deklarace metody onCreate, která se volá při vytvoření aktivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Inicializace ViewBindingu
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 1. Najdeme NavController
+        // 1. Najdeme NavController pro navigaci mezi fragmenty
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--Tento soubor definuje položky pro navigační menu (v tomto případě pro spodní lištu - BottomNavigationView).
+     Každá položka <item> představuje jedno tlačítko/ikonu v liště. -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/calendarFragment"

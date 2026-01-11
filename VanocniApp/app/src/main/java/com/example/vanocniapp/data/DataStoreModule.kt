@@ -6,4 +6,5 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 
 // Vytvoří jedinou instanci DataStore pro celou aplikaci, dostupnou přes context
+// 'name = "settings"' je název souboru na disku telefonu, kde budou data fyzicky uložena.
 val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")

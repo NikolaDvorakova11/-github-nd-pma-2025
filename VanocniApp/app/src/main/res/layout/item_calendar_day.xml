@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- MaterialCardView je základní kontejner pro jedno políčko kalendáře. -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,10 +10,14 @@
     android:clickable="true"
     android:focusable="true">
 
+    <!-- FrameLayout je speciální kontejner, který umožňuje vrstvit prvky PŘES SEBE.
+         Je ideální, když chceme, aby se obrázek a text překrývaly na stejném místě.
+         Prvky, které jsou v kódu níže, se vykreslí navrch. -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- ImageView slouží k zobrazení dílku skládačky (obrázku).-->
         <ImageView
             android:id="@+id/puzzleImageView"
             android:layout_width="match_parent"
@@ -20,6 +25,7 @@
             android:scaleType="centerCrop"
             android:visibility="invisible" />
 
+        <!-- Tento TextView zobrazuje číslo dne (1, 2, 3...).  -->
         <TextView
             android:id="@+id/dayTextView"
             android:layout_width="wrap_content"

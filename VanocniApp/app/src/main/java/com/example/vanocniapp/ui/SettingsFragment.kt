@@ -24,6 +24,7 @@ class SettingsFragment : Fragment() {
 
     private lateinit var userPreferencesRepository: UserPreferencesRepository
 
+    // Formát pro formátování datumu --> převede se počítačové datum na lidsky čitelný formát "1. 12. 2025"
     private val dateFormatter = SimpleDateFormat("d. M. yyyy", Locale.getDefault())
 
     override fun onCreateView(
@@ -39,24 +40,32 @@ class SettingsFragment : Fragment() {
 
         userPreferencesRepository = UserPreferencesRepository(requireContext())
 
-        setupClickListeners()
-        observeMockDate()
+        setupClickListeners()  // Nastavíme všechnyOnClickListenery
+        observeMockDate()      // Zobrazujeme aktuální testovací datum
     }
 
+    // NASTAVENÍ KLIKNUTÍ
     private fun setupClickListeners() {
+        // Kliknutí na kartu pro resetování kalendáře
         binding.resetCalendarCard.setOnClickListener { showResetConfirmationDialog() }
+        // Kliknutí na kartu pro nastavení testovacího data
         binding.setDateCard.setOnClickListener { showDatePickerDialog() }
+        // Kliknutí na tlačítko pro smazání testovacího data
         binding.clearDateButton.setOnClickListener { clearMockDate() }
     }
 
+    // SLEDOVÁNÍ TESTOVACÍHO DATUMU
     private fun observeMockDate() {
         lifecycleScope.launch {
+            // Nasloucháme testovací datum
             userPreferencesRepository.mockDateFlow.collectLatest {
                 if (it != null) {
+                    // Pokud je nastavené testovací datum, zobrazíme ho v textovém poli
                     val calendar = Calendar.getInstance().apply { timeInMillis = it }
                     binding.currentMockDateTextView.text = "Testovací datum: ${dateFormatter.format(calendar.time)}"
-                    binding.clearDateButton.visibility = View.VISIBLE
+                    binding.clearDateButton.visibility = View.VISIBLE   // Ukážeme tlačítko pro smazání
                 } else {
+                    // Jinak napíšeme, že se používá reálný čas z mobilu
                     binding.currentMockDateTextView.text = "Aplikace používá reálné datum."
                     binding.clearDateButton.visibility = View.GONE
                 }
@@ -64,23 +73,26 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    // VÝBĚR DATUMU (Kalendářové okno)
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
+        // Otevře systémové okno pro výběr dne/měsíce/roku
         DatePickerDialog(
             requireContext(),
             { _, year, month, dayOfMonth ->
-                // Správný a bezpečný způsob, jak nastavit datum bez časových chyb
+                // Správný a bezpečný způsob, jak nastavit datum bez časových chyb --> zpracujeme, co uživatel vybral
                 val selectedDate = Calendar.getInstance().apply {
                     set(Calendar.YEAR, year)
                     set(Calendar.MONTH, month)
                     set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    // Vynulujeme čas, abychom se vyhnuli problémům s časovými zónami
+                    // Vynulujeme čas, abychom se vyhnuli problémům s časovými zónami --> nastavíme ho na 00:00:00
                     set(Calendar.HOUR_OF_DAY, 0)
                     set(Calendar.MINUTE, 0)
                     set(Calendar.SECOND, 0)
                     set(Calendar.MILLISECOND, 0)
                 }
                 lifecycleScope.launch {
+                    // Uložíme vybraný čas do paměti mobilu
                     userPreferencesRepository.setMockDate(selectedDate.timeInMillis)
                 }
             },
@@ -97,7 +109,9 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    // RESETOVÁNÍ OTEVŘENÝCH POLÍČEK
     private fun showResetConfirmationDialog() {
+        // Dialog pro potvrzení resetování kalendáře --> Nejdřív se pro jistotu zeptáme, aby si uživatel nesmazal postup omylem
         AlertDialog.Builder(requireContext())
             .setTitle("Opravdu resetovat?")
             .setMessage("Všechna otevřená políčka budou smazána. Tuto akci nelze vrátit zpět.")
@@ -108,7 +122,8 @@ class SettingsFragment : Fragment() {
 
     private fun resetCalendar() {
         lifecycleScope.launch {
-            userPreferencesRepository.clearOpenedDays()
+            userPreferencesRepository.clearOpenedDays()     // Smazání otevřených políček
+            //Vytvoříme a zobrazíme Snackbar (malou vyskakovací lištu ve spodní části obrazovky)
             Snackbar.make(binding.root, "Kalendář byl úspěšně resetován.", Snackbar.LENGTH_SHORT).show()
         }
     }
